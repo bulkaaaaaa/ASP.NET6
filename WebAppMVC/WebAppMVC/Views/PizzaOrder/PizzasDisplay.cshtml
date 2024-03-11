@@ -1,0 +1,39 @@
+﻿@model WebAppMVC.Models.Product[]
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Pizzas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #e44d26;
+        }
+
+        .pizza {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>The order is as follows</h1>
+    @foreach (var pizza in Model)
+    {
+        <div class="pizza">
+            <p>Name: @pizza.Name</p>
+            <p>Price: $@pizza.Price</p>
+        </div>
+    }
+    <a href="/Home/Index">Back to Home</a>
+</body>
+</html>

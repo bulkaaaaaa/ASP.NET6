@@ -1,0 +1,89 @@
+﻿@model WebAppMVC.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Order Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #e44d26;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #e44d26;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        How many units of the product you would you like to order?
+    </h1>
+    <form method="post" action="/PizzaOrder/ProcessOrder" id="orderForm">
+        <label for="productQuantity">Product Quantity:</label>
+        <input type="number" id="productQuantity" name="productQuantity" min="0" step="1" required>
+        <button type="button" onclick="createPizzaForms()">Submit</button>
+    </form>
+
+    <script>
+        function createPizzaForms() {
+            var quantity = document.getElementById('productQuantity').value;
+            var formContainer = document.getElementById('orderForm');
+
+            var existingForms = document.querySelectorAll('.pizza-form');
+            existingForms.forEach(function (form) {
+                form.remove();
+            });
+
+            for (var i = 0; i < quantity; i++) {
+                var pizzaForm = document.createElement('form');
+                pizzaForm.className = 'pizza-form';
+                pizzaForm.innerHTML = `
+            <label for="pizzas[${i}].Name">Pizza ${i + 1} Name:</label>
+            <input type="text" id="pizzas[${i}].Name" name="pizzas[${i}].Name" required>
+            <label for="pizzas[${i}].Price">Pizza ${i + 1} Price:</label>
+            <input type="number" id="pizzas[${i}].Price" name="pizzas[${i}].Price" min="0" step="0.01" required>
+            <br>
+        `;
+
+                formContainer.appendChild(pizzaForm);
+            }
+           
+            formContainer.setAttribute('action', '/PizzaOrder/ProcessOrder');
+
+            var submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.textContent = 'Submit Pizza Order';
+            formContainer.appendChild(submitButton);
+        }
+    </script>
+</body>
+</html>
